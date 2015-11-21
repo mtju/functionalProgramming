@@ -67,4 +67,4 @@ parseBoardField str =
 
 parseBoardFields :: [String] -> Board
 parseBoardFields [] = []
-parseBoardFields (x:xs) = [parseBoardField(x)] ++ parseBoardFields xs
+parseBoardFields (x:xs) = parseBoardField(x) : parseBoardFields xs
