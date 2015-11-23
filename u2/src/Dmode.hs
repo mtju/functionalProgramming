@@ -10,9 +10,16 @@ import qualified Data.ByteString.Lazy.Char8 as CLz
 
 dMode :: String -> IO ()
 dMode gameName = do
-    currBoardStr <- getOpponentMove gameName
-    putStrLn $ show $ parseBoard currBoardStr
-    postMove gameName $ getNextMove $ parseBoard currBoardStr
+    --currBoardStr <- getOpponentMove gameName
+    --putStrLn $ show $ parseBoard currBoardStr
+    --postMove gameName $ getNextMove $ parseBoard currBoardStr
+    defendLoop gameName
+
+defendLoop :: String -> IO ()
+defendLoop gameName = do
+    oppMove <- getOpponentMove gameName
+    postMove gameName $ getNextMove $ parseBoard oppMove
+    defendLoop gameName
 
 postMove :: String -> Board -> IO ()
 postMove gameName board = do

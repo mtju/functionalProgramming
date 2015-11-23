@@ -8,18 +8,15 @@ import SxprList
 import qualified Data.ByteString.Char8 as C
 import qualified Data.ByteString.Lazy.Char8 as CLz
 
-
 aMode :: String -> IO ()
 aMode gameName = do
-    --postMove gameName $ getNextMove []
-    someLoop gameName []
+    attackLoop gameName []
 
-someLoop :: String -> Board -> IO ()
-someLoop gameName currBoard = 
-    do
+attackLoop :: String -> Board -> IO ()
+attackLoop gameName currBoard = do
     postMove gameName $ getNextMove currBoard
     oppMove <- getOpponentMove gameName
-    someLoop gameName $ parseBoard oppMove
+    attackLoop gameName $ parseBoard oppMove
 
 postMove :: String -> Board -> IO ()
 postMove gameName board = do
