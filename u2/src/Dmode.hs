@@ -11,7 +11,7 @@ import qualified Data.ByteString.Lazy.Char8 as CLz
 dMode :: String -> IO ()
 dMode gameName = do
     currBoardStr <- getOpponentMove gameName
-    putStrLn currBoardStr
+    putStrLn $ show $ parseBoard currBoardStr
     --putStrLn (getOpponentMove gameName)
     --postMove gameName $ getNextMove $ getOpponentMove gameName
 
@@ -27,8 +27,5 @@ getOpponentMove :: String -> IO String
 getOpponentMove gameName = do
     let opts = defaults & header "Accept" .~ ["application/s-expr+list"] -- change me
     r <- getWith opts ("http://tictactoe.homedir.eu/game/" ++ gameName ++ "/player/2")
-    --putStrLn $ CLz.unpack (r ^. responseBody)
-    --testString <- show (r ^. responseBody)
-    let testString = show (r ^. responseBody)
-    return testString
-    --return "(l (m \"x\" 0 \"y\" 1 \"v\" \"x\"))"
+    let returnString = CLz.unpack (r ^. responseBody)
+    return returnString
