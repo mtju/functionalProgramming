@@ -1,4 +1,4 @@
-module SxprList
+module SxprMap
 where
 import Data.Char
 import Data.List
@@ -51,4 +51,3 @@ exportBoardFields (field : left) str counter = let
 
 exportField :: BoardField -> String
 exportField (x, y, v) = "(m \"x\" " ++ (show x) ++ " \"y\" " ++ (show y) ++ " \"v\" \"" ++ [v] ++ "\")"
-

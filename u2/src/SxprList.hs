@@ -51,4 +51,3 @@ exportBoardFields (field : left) str = let
 
 exportField :: BoardField -> String
 exportField (x, y, v) = "(m \"x\" " ++ (show x) ++ " \"y\" " ++ (show y) ++ " \"v\" \"" ++ [v] ++ "\")"
-

@@ -4,7 +4,7 @@ where
 import TTTcommon
 import Network.Wreq
 import Control.Lens
-import SxprList
+import SxprMap
 import qualified Data.ByteString.Char8 as C
 import qualified Data.ByteString.Lazy.Char8 as CLz
 
@@ -24,7 +24,7 @@ defendLoop gameName = do
 
 postMove :: String -> Board -> IO ()
 postMove gameName board = do
-    let opts = defaults & header "Content-Type" .~ ["application/s-expr+list"] -- change me
+    let opts = defaults & header "Content-Type" .~ ["application/s-expr+map"]
     let postData = C.pack (exportBoard board)
     postWith opts ("http://tictactoe.homedir.eu/game/" ++ gameName ++ "/player/2") postData
     putStrLn "Move posted."
@@ -32,7 +32,7 @@ postMove gameName board = do
 getOpponentMove :: String -> IO String
 getOpponentMove gameName = do
     putStrLn "Waiting for opponent."
-    let opts = defaults & header "Accept" .~ ["application/s-expr+list"] -- change me
+    let opts = defaults & header "Accept" .~ ["application/s-expr+map"]
     r <- getWith opts ("http://tictactoe.homedir.eu/game/" ++ gameName ++ "/player/2")
     let returnString = CLz.unpack (r ^. responseBody)
     return returnString

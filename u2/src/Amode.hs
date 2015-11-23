@@ -32,7 +32,7 @@ postMove gameName board = do
 getOpponentMove :: String -> IO String
 getOpponentMove gameName = do
     putStrLn "Waiting for opponent."
-    let opts = defaults & header "Accept" .~ ["application/s-expr+list"] -- change me
+    let opts = defaults & header "Accept" .~ ["application/s-expr+list"]
     r <- getWith opts ("http://tictactoe.homedir.eu/game/" ++ gameName ++ "/player/1")
     let returnString = CLz.unpack (r ^. responseBody)
     return returnString
