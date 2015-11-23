@@ -27,3 +27,10 @@ countFieldsX board = length(filter (\(_, _, x) -> x == 'x') board)
 
 countFieldsO :: Board -> Int
 countFieldsO board = length(filter (\(_, _, o) -> o == 'o') board)
+
+gameStatus :: Board -> String
+gameStatus currBoard
+    | length currBoard == 9 = "Tie"
+    | otherwise = "Ongoing"
+
+-- Todo add win/lose check
