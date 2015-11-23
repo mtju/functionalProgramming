@@ -16,7 +16,7 @@ defendLoop :: String -> IO ()
 defendLoop gameName = do
     oppMove <- getOpponentMove gameName
     if (gameStatus $ parseBoard oppMove) /= "Ongoing"
-        then do putStrLn (gameStatus (parseBoard oppMove))
+        then do putStrLn $ gameStatus $ parseBoard oppMove
         else do postMove gameName $ getNextMove $ parseBoard oppMove
                 if (gameStatus $ getNextMove $ parseBoard oppMove) /= "Ongoing"
                     then do putStrLn $ gameStatus $ getNextMove $ parseBoard oppMove
@@ -36,4 +36,3 @@ getOpponentMove gameName = do
     r <- getWith opts ("http://tictactoe.homedir.eu/game/" ++ gameName ++ "/player/2")
     let returnString = CLz.unpack (r ^. responseBody)
     return returnString
-

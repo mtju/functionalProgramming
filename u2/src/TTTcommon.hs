@@ -32,5 +32,4 @@ gameStatus :: Board -> String
 gameStatus currBoard
     | length currBoard == 9 = "Tie"
     | otherwise = "Ongoing"
-
--- Todo add win/lose check
+-- TODO: add win/lose check

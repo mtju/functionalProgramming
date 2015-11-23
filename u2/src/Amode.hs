@@ -15,8 +15,12 @@ aMode gameName = do
 attackLoop :: String -> Board -> IO ()
 attackLoop gameName currBoard = do
     postMove gameName $ getNextMove currBoard
-    oppMove <- getOpponentMove gameName
-    attackLoop gameName $ parseBoard oppMove
+    if (gameStatus $ getNextMove currBoard) /= "Ongoing"
+        then do putStrLn $ gameStatus $ getNextMove currBoard
+        else do oppMove <- getOpponentMove gameName
+                if (gameStatus $ parseBoard oppMove) /= "Ongoing"
+                    then do putStrLn $ gameStatus $ parseBoard oppMove
+                    else do attackLoop gameName $ parseBoard oppMove
 
 postMove :: String -> Board -> IO ()
 postMove gameName board = do
