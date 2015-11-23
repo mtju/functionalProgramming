@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 module Amode (aMode)
 where
 import TTTcommon
@@ -10,16 +11,11 @@ aMode :: String -> IO ()
 aMode gameName = do
     postMove gameName $ getNextMove []
 
---postBoard :: Board -> 
 
---Game status
-
---NextMove
 postMove :: String -> Board -> IO ()
 postMove gameName board = do
     let opts = defaults & header "Content-Type" .~ ["application/s-expr+list"]
-    let firstData = C.pack (exportBoard board)
-    postWith opts ("http://tictactoe.homedir.eu/game/" ++ gameName ++ "/player/1") firstData
+    let postData = C.pack (exportBoard board)
+    postWith opts ("http://tictactoe.homedir.eu/game/" ++ gameName ++ "/player/1") postData
     putStrLn "Move posted."
 
---getBoard :: String ->
