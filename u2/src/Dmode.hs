@@ -12,9 +12,7 @@ dMode :: String -> IO ()
 dMode gameName = do
     currBoardStr <- getOpponentMove gameName
     putStrLn $ show $ parseBoard currBoardStr
-    --putStrLn (getOpponentMove gameName)
-    --postMove gameName $ getNextMove $ getOpponentMove gameName
-
+    postMove gameName $ getNextMove $ parseBoard currBoardStr
 
 postMove :: String -> Board -> IO ()
 postMove gameName board = do
@@ -25,6 +23,7 @@ postMove gameName board = do
 
 getOpponentMove :: String -> IO String
 getOpponentMove gameName = do
+    putStrLn "Waiting for opponent."
     let opts = defaults & header "Accept" .~ ["application/s-expr+list"] -- change me
     r <- getWith opts ("http://tictactoe.homedir.eu/game/" ++ gameName ++ "/player/2")
     let returnString = CLz.unpack (r ^. responseBody)

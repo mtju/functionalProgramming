@@ -6,11 +6,20 @@ import Network.Wreq
 import Control.Lens
 import SxprList
 import qualified Data.ByteString.Char8 as C
+import qualified Data.ByteString.Lazy.Char8 as CLz
+
 
 aMode :: String -> IO ()
 aMode gameName = do
-    postMove gameName $ getNextMove []
+    --postMove gameName $ getNextMove []
+    someLoop gameName []
 
+someLoop :: String -> Board -> IO ()
+someLoop gameName currBoard = 
+    do
+    postMove gameName $ getNextMove currBoard
+    oppMove <- getOpponentMove gameName
+    someLoop gameName $ parseBoard oppMove
 
 postMove :: String -> Board -> IO ()
 postMove gameName board = do
@@ -19,3 +28,10 @@ postMove gameName board = do
     postWith opts ("http://tictactoe.homedir.eu/game/" ++ gameName ++ "/player/1") postData
     putStrLn "Move posted."
 
+getOpponentMove :: String -> IO String
+getOpponentMove gameName = do
+    putStrLn "Waiting for opponent."
+    let opts = defaults & header "Accept" .~ ["application/s-expr+list"] -- change me
+    r <- getWith opts ("http://tictactoe.homedir.eu/game/" ++ gameName ++ "/player/1")
+    let returnString = CLz.unpack (r ^. responseBody)
+    return returnString
