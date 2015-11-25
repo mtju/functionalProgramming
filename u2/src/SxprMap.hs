@@ -22,7 +22,7 @@ removeOuter str =
 removeNonEssentialStuff :: String -> String
 removeNonEssentialStuff str = filter (/= '(') $ filter (/= ')') $ filter (/= '"') $ filter (/= '\\') $ filter (/= ' ') str
 
--- Split at 7 --
+-- Split at 8 --
 splitEvery _ [] = []
 splitEvery n list = first : (splitEvery n rest)
   where
